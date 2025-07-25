@@ -25,8 +25,8 @@
             let found=0;
             let link="";
             for (let i = 1; i <= 10; i++) {
-                if (CryptoJS.MD5(document.getElementById("inp").toString())==res[toString(i)]["flag"]) {
-                    link="https://"+res[toString(i)]["img_cli"]+"/"+res[toString(i)]["img_code"]+"/"+res[toString(i)]["img_name"]+"."+res[toString(i)]["img_ext"];
+                if (CryptoJS.MD5(document.getElementById("inp").toString())==res[toString(i)].flag) {
+                    link="https://"+res[toString(i)].img_cli+"/"+res[toString(i)].img_code+"/"+res[toString(i)].img_name+"."+res[toString(i)].img_ext;
                     found=1;
                     break;
                 }
