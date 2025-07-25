@@ -46,7 +46,7 @@
                 const c1 = charToVal(str1[i]);
                 const c2 = charToVal(str2[i]);
                 const code = (c1+c2) % 62;
-                resultChars.push(valToChar(code).toUpperCase());
+                resultChars.push(valToChar(code));
             }
 
             return resultChars.join('');
@@ -80,7 +80,7 @@
                 const c1 = charToVal(str1[i]);
                 const c2 = charToVal(str2[i]);
                 const code = (c1-c2+62) % 62;
-                resultChars.push(valToChar(code).toUpperCase());
+                resultChars.push(valToChar(code));
             }
 
             return resultChars.join('');
