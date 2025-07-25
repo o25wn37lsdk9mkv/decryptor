@@ -24,7 +24,7 @@
                 let found=0;
                 let link="";
                 for (let i = 1; i <= 10; i++) {
-                    if (CryptoJS.MD5((document.getElementById("inp").value).toString())==res[i.toString()].flag) {
+                    if (CryptoJS.MD5(document.getElementById("inp").value).toString()==res[i.toString()].flag) {
                         link="https://"+res[i.toString()].img_cli+"/"+res[i.toString()].img_code+"/"+res[i.toString()].img_name+"."+res[i.toString()].img_ext;
                         found=1;
                         break;
