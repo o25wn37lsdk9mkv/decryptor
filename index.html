@@ -26,7 +26,7 @@
                 if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
                 return 10 + (code - 0x61);
                 if (code >= 0x41 && code <= 0x5A) // 'A'–'Z'
-                return 35 + (code - 0x41);
+                return 36 + (code - 0x41);
                 throw new Error("Invalid character: " + ch);
             };
 
@@ -59,12 +59,15 @@
                 return code - 0x30;
                 if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
                 return 10 + (code - 0x61);
+                if (code >= 0x41 && code <= 0x5A) // 'A'–'Z'
+                return 36 + (code - 0x41);
                 throw new Error("Invalid character: " + ch);
             };
 
             const valToChar = v => {
                 if (v >= 0 && v <= 9)    return String.fromCharCode(0x30 + v);
                 if (v >= 10 && v < 36)   return String.fromCharCode(0x61 + (v - 10));
+                if (v>=36 && v<62)       return String.fromCharCode(0x41 + (v - 36));
                 throw new Error("Value out of range: " + v);
             };
 
