@@ -7,7 +7,7 @@
         <div align="center">
             <h1>Decryptor</h1>
             <input type="text" id="inp" value="">
-            <button>Send</button>
+            <button id="go">Send</button>
         </div>
 
         <div align="center">
@@ -17,23 +17,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-        var input=document.getElementById("inp").value;
-        let response;
-        fetch('api.json')
-        .then(response => response.json)
-        .then(res => {
-            let found=0;
-            let link="";
-            for (let i = 1; i <= 10; i++) {
-                if (CryptoJS.MD5(document.getElementById("inp").toString())==res[toString(i)].flag) {
-                    link="https://"+res[toString(i)].img_cli+"/"+res[toString(i)].img_code+"/"+res[toString(i)].img_name+"."+res[toString(i)].img_ext;
-                    found=1;
-                    break;
+        document.getElementById('go').addEventListener('click', () => {
+            fetch('api.json')
+            .then(response => response.json())
+            .then(res => {
+                let found=0;
+                let link="";
+                for (let i = 1; i <= 10; i++) {
+                    if (CryptoJS.MD5((document.getElementById("inp").value).toString())==res[i.toString()].flag) {
+                        link="https://"+res[i.toString()].img_cli+"/"+res[i.toString()].img_code+"/"+res[i.toString()].img_name+"."+res[i.toString()].img_ext;
+                        found=1;
+                        break;
+                    }
                 }
-            }
-            if (found==1) {
-                document.getElementById("img").src=link;
-            }
+                if (found==1) {
+                    document.getElementById("img").src=link;
+                } else {
+                    alert("Couldn't decrypt!")
+                }
+            });
         });
     </script>
 </html>
