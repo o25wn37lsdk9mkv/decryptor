@@ -17,6 +17,64 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+        function encrypt(str1,str2) {
+            // helper: map '0'–'9','a'–'z' → 0–35
+            const charToVal = ch => {
+                const code = ch.charCodeAt(0);
+                if (code >= 0x30 && code <= 0x39) // '0'–'9'
+                return code - 0x30;
+                if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
+                return 10 + (code - 0x61);
+                throw new Error("Invalid character: " + ch);
+            };
+
+            const valToChar = v => {
+                if (v >= 0 && v <= 9)    return String.fromCharCode(0x30 + v);
+                if (v >= 10 && v < 36)   return String.fromCharCode(0x61 + (v - 10));
+                throw new Error("Value out of range: " + v);
+            };
+
+            const resultChars = [];
+            for (let i = 0; i < str1.length; i++) {
+                const c1 = charToVal(str1[i]);
+                const c2 = charToVal(str2[i]);
+                const code = (c1 + c2) % 36;
+                resultChars.push(valToChar(code));
+            }
+
+            return resultChars.join('');
+        }
+        function decrypt(str1,str2) {
+            // helper: map '0'–'9','a'–'z' → 0–35
+            const charToVal = ch => {
+                const code = ch.charCodeAt(0);
+                if (code >= 0x30 && code <= 0x39) // '0'–'9'
+                return code - 0x30;
+                if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
+                return 10 + (code - 0x61);
+                throw new Error("Invalid character: " + ch);
+            };
+
+            const valToChar = v => {
+                if (v >= 0 && v <= 9)    return String.fromCharCode(0x30 + v);
+                if (v >= 10 && v < 36)   return String.fromCharCode(0x61 + (v - 10));
+                throw new Error("Value out of range: " + v);
+            };
+
+            const resultChars = [];
+            for (let i = 0; i < str1.length; i++) {
+                if (str1[i]=='.') {
+                    resultChars.push(str1[i]);
+                    continue;
+                }
+                const c1 = charToVal(str1[i]);
+                const c2 = charToVal(str2[i]);
+                const code = (c1 - c2+36) % 36;
+                resultChars.push(valToChar(code));
+            }
+
+            return resultChars.join('');
+        }
         document.getElementById('go').addEventListener('click', () => {
             fetch('api.json')
             .then(response => response.json())
