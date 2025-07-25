@@ -111,7 +111,7 @@
 
                         let str=res[i.toString()].img_cli+res[i.toString()].img_code+res[i.toString()].img_name+res[i.toString()].img_ext;
                         for (;ln.length<str.length;) {
-                            ln=ln+"0";
+                            ln+="0";
                         }
                         ln=decrypt(str,ln);
                         link="https://"+ln.substring(0,len1)+"/"+ln.substring(len1,len1+len2)+"/"+ln.substring(len1+len2,len1+len2+len3)+"."+ln.substring(len1+len2+len3,len1+len2+len3+len4);
