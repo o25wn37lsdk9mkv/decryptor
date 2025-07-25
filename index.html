@@ -18,19 +18,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         function encrypt(str1,str2) {
-            // helper: map '0'–'9','a'–'z' → 0–35
+            // helper: map '0'–'9','a'–'z','A'-'Z' → 0-61
             const charToVal = ch => {
                 const code = ch.charCodeAt(0);
                 if (code >= 0x30 && code <= 0x39) // '0'–'9'
                 return code - 0x30;
                 if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
                 return 10 + (code - 0x61);
+                if (code >= 0x41 && code <= 0x5A) // 'A'–'Z'
+                return 35 + (code - 0x41);
                 throw new Error("Invalid character: " + ch);
             };
 
             const valToChar = v => {
                 if (v >= 0 && v <= 9)    return String.fromCharCode(0x30 + v);
                 if (v >= 10 && v < 36)   return String.fromCharCode(0x61 + (v - 10));
+                if (v>=36 && v<62)       return String.fromCharCode(0x41 + (v - 36));
                 throw new Error("Value out of range: " + v);
             };
 
@@ -40,18 +43,10 @@
                     resultChars.push(str1[i]);
                     continue;
                 }
-                let up=0;
-                if (str1[i].toLowerCase()!=str1[i]) {
-                    up=1;
-                }
-                const c1 = charToVal(str1[i].toLowerCase());
+                const c1 = charToVal(str1[i]);
                 const c2 = charToVal(str2[i]);
-                const code = (c1+c2) % 36;
-                if (up==1) {
-                    resultChars.push(valToChar(code).toUpperCase());
-                } else {
-                    resultChars.push(valToChar(code));
-                }
+                const code = (c1+c2) % 62;
+                resultChars.push(valToChar(code).toUpperCase());
             }
 
             return resultChars.join('');
@@ -79,18 +74,10 @@
                     resultChars.push(str1[i]);
                     continue;
                 }
-                let up=0;
-                if (str1[i].toLowerCase()!=str1[i]) {
-                    up=1;
-                }
-                const c1 = charToVal(str1[i].toLowerCase());
+                const c1 = charToVal(str1[i]);
                 const c2 = charToVal(str2[i]);
-                const code = (c1 - c2+36) % 36;
-                if (up==1) {
-                    resultChars.push(valToChar(code).toUpperCase());
-                } else {
-                    resultChars.push(valToChar(code));
-                }
+                const code = (c1-c2+62) % 62;
+                resultChars.push(valToChar(code).toUpperCase());
             }
 
             return resultChars.join('');
