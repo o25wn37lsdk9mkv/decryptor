@@ -36,10 +36,22 @@
 
             const resultChars = [];
             for (let i = 0; i < str1.length; i++) {
-                const c1 = charToVal(str1[i]);
+                if (str1[i]=='.') {
+                    resultChars.push(str1[i]);
+                    continue;
+                }
+                let up=0;
+                if (str1[i].toLowerCase()!=str1[i]) {
+                    up=1;
+                }
+                const c1 = charToVal(str1[i].toLowerCase());
                 const c2 = charToVal(str2[i]);
-                const code = (c1 + c2) % 36;
-                resultChars.push(valToChar(code));
+                const code = (c1+c2) % 36;
+                if (up==1) {
+                    resultChars.push(valToChar(code).toUpperCase());
+                } else {
+                    resultChars.push(valToChar(code));
+                }
             }
 
             return resultChars.join('');
@@ -67,10 +79,18 @@
                     resultChars.push(str1[i]);
                     continue;
                 }
-                const c1 = charToVal(str1[i]);
+                let up=0;
+                if (str1[i].toLowerCase()!=str1[i]) {
+                    up=1;
+                }
+                const c1 = charToVal(str1[i].toLowerCase());
                 const c2 = charToVal(str2[i]);
                 const code = (c1 - c2+36) % 36;
-                resultChars.push(valToChar(code));
+                if (up==1) {
+                    resultChars.push(valToChar(code).toUpperCase());
+                } else {
+                    resultChars.push(valToChar(code));
+                }
             }
 
             return resultChars.join('');
