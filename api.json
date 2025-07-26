@@ -1,72 +1,65 @@
 {
     "1" : {
-        "flag" : "da498315b0dedf77f82039d76f90a653",
-        "img_cli" : "r.wns.ux",
-        "img_code" : "9L2mHfx1",
-        "img_name" : "trollcho",
-        "img_ext" : "jpg"
-    },
-    "2" : {
         "flag" : "32de5ffa77b7dc39949ef5a003aa3703",
         "img_cli" : "G.nHy.jJ",
         "img_code" : "SZHTFTgj",
         "img_name" : "code1",
         "img_ext" : "png"
     },
-    "3" : {
-        "flag" : "",
+    "2" : {
+        "flag" : "513d55154e3f6785b26cee7650f0850a",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
+        "img_name" : "jigsaw1",
+        "img_ext" : ""
+    },
+    "3" : {
+        "flag" : "f99edac3558c3d5ab47bb07440f1e84f",
+        "img_cli" : "",
+        "img_code" : "",
+        "img_name" : "jigsaw2",
         "img_ext" : ""
     },
     "4" : {
-        "flag" : "",
+        "flag" : "1abcabe6133989b891f7418706496d9a",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
+        "img_name" : "jigsaw3",
         "img_ext" : ""
     },
     "5" : {
-        "flag" : "",
+        "flag" : "09e45e6c8aadc2a1ff299a5719587b00",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
+        "img_name" : "jigsaw4",
         "img_ext" : ""
     },
     "6" : {
-        "flag" : "",
+        "flag" : "40cd07e50568fe928a7243b03656b9e3",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
+        "img_name" : "finale1",
         "img_ext" : ""
     },
     "7" : {
-        "flag" : "",
+        "flag" : "47e84eedab2e82b83b12dad1c6432537",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
+        "img_name" : "finale2",
         "img_ext" : ""
     },
     "8" : {
-        "flag" : "",
+        "flag" : "e028117dc463a443c0fa206532972d86",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
+        "img_name" : "finale3",
         "img_ext" : ""
     },
     "9" : {
-        "flag" : "",
+        "flag" : "3b730bdb46aa72141db7b100595ef233",
         "img_cli" : "",
         "img_code" : "",
-        "img_name" : "",
-        "img_ext" : ""
-    },
-    "10" : {
-        "flag" : "",
-        "img_cli" : "",
-        "img_code" : "",
-        "img_name" : "",
+        "img_name" : "finale4",
         "img_ext" : ""
     }
 }
