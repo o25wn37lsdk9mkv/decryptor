@@ -91,7 +91,7 @@
             .then(res => {
                 let found=0;
                 let link="";
-                for (let i = 1; i <= 10; i++) {
+                for (let i = 1; i <= 11; i++) {
                     if (CryptoJS.MD5(document.getElementById("inp").value).toString()==res[i.toString()].flag) {
                         let len1=res[i.toString()].img_cli.length,
                             len2=res[i.toString()].img_code.length,
