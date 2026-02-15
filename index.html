@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Decryptor</title>
+    </head>
+    <body>
+        <div align="center">
+            <h1>Decryptor</h1>
+            <input type="text" id="inp" value="">
+            <button id="go">Decrypt</button>
+        </div>
+
+        <div align="center">
+            <img src="" id="img"></img>
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        function encrypt(str1,str2) {
+            // helper: map '0'–'9','a'–'z','A'-'Z' → 0-61
+            const charToVal = ch => {
+                const code = ch.charCodeAt(0);
+                if (code >= 0x30 && code <= 0x39) // '0'–'9'
+                return code - 0x30;
+                if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
+                return 10 + (code - 0x61);
+                if (code >= 0x41 && code <= 0x5A) // 'A'–'Z'
+                return 36 + (code - 0x41);
+                throw new Error("Invalid character: " + ch);
+            };
+
+            const valToChar = v => {
+                if (v >= 0 && v <= 9)    return String.fromCharCode(0x30 + v);
+                if (v >= 10 && v < 36)   return String.fromCharCode(0x61 + (v - 10));
+                if (v>=36 && v<62)       return String.fromCharCode(0x41 + (v - 36));
+                throw new Error("Value out of range: " + v);
+            };
+
+            const resultChars = [];
+            for (let i = 0; i < str1.length; i++) {
+                if (str1[i]=='.'||str2[i]=='0') {
+                    resultChars.push(str1[i]);
+                    continue;
+                }
+                const c1 = charToVal(str1[i]);
+                const c2 = charToVal(str2[i]);
+                const code = (c1+c2) % 62;
+                resultChars.push(valToChar(code));
+            }
+
+            return resultChars.join('');
+        }
+        function decrypt(str1,str2) {
+            // helper: map '0'–'9','a'–'z' → 0–35
+            const charToVal = ch => {
+                const code = ch.charCodeAt(0);
+                if (code >= 0x30 && code <= 0x39) // '0'–'9'
+                return code - 0x30;
+                if (code >= 0x61 && code <= 0x7A) // 'a'–'z'
+                return 10 + (code - 0x61);
+                if (code >= 0x41 && code <= 0x5A) // 'A'–'Z'
+                return 36 + (code - 0x41);
+                throw new Error("Invalid character: " + ch);
+            };
+
+            const valToChar = v => {
+                if (v >= 0 && v <= 9)    return String.fromCharCode(0x30 + v);
+                if (v >= 10 && v < 36)   return String.fromCharCode(0x61 + (v - 10));
+                if (v>=36 && v<62)       return String.fromCharCode(0x41 + (v - 36));
+                throw new Error("Value out of range: " + v);
+            };
+
+            const resultChars = [];
+            for (let i = 0; i < str1.length; i++) {
+                if (str1[i]=='.'||str2[i]=='0') {
+                    resultChars.push(str1[i]);
+                    continue;
+                }
+                const c1 = charToVal(str1[i]);
+                const c2 = charToVal(str2[i]);
+                const code = (c1-c2+62) % 62;
+                resultChars.push(valToChar(code));
+            }
+
+            return resultChars.join('');
+        }
+        document.getElementById('go').addEventListener('click', () => {
+            fetch('api.json')
+            .then(response => response.json())
+            .then(res => {
+                let found=0;
+                let link="";
+                for (let i = 1; i <= 12; i++) {
+                    if (CryptoJS.MD5(document.getElementById("inp").value).toString()==res[i.toString()].flag) {
+                        let len1=res[i.toString()].img_cli.length,
+                            len2=res[i.toString()].img_code.length,
+                            len3=res[i.toString()].img_name.length,
+                            len4=res[i.toString()].img_ext.length;
+                        let ln=document.getElementById("inp").value;
+
+                        let str=res[i.toString()].img_cli+res[i.toString()].img_code+res[i.toString()].img_name+res[i.toString()].img_ext;
+                        for (;ln.length<str.length;) {
+                            ln+="0";
+                        }
+                        ln=decrypt(str,ln);
+                        link="https://"+ln.substring(0,len1)+"/"+ln.substring(len1,len1+len2)+"/"+ln.substring(len1+len2,len1+len2+len3)+"."+ln.substring(len1+len2+len3,len1+len2+len3+len4);
+                        found=1;
+                        break;
+                    }
+                }
+                if (found==1) {
+                    document.getElementById("img").src=link;
+                } else {
+                    alert("Couldn't decrypt!")
+                }
+            });
+        });
+    </script>
+</html>
