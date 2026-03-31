@@ -17,7 +17,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+        function f(str) {
+            return CryptoJS.MD5(str).toString();
+        }
         function encrypt(str1,str2) {
+            for (;str2.length<str1.length;) {
+                str2+='0'
+            }
             // helper: map '0'–'9','a'–'z','A'-'Z' → 0-61
             const charToVal = ch => {
                 const code = ch.charCodeAt(0);
@@ -52,6 +58,9 @@
             return resultChars.join('');
         }
         function decrypt(str1,str2) {
+            for (;str2.length<str1.length;) {
+                str2+='0'
+            }
             // helper: map '0'–'9','a'–'z' → 0–35
             const charToVal = ch => {
                 const code = ch.charCodeAt(0);
@@ -91,20 +100,19 @@
             .then(res => {
                 let found=0;
                 let link="";
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 1; i <= 6; i++) {
                     if (CryptoJS.MD5(document.getElementById("inp").value).toString()==res[i.toString()].flag) {
-                        let len1=res[i.toString()].img_cli.length,
-                            len2=res[i.toString()].img_code.length,
-                            len3=res[i.toString()].img_name.length,
-                            len4=res[i.toString()].img_ext.length;
+                        let len1=res[i.toString()].img_code.length,
+                            len2=res[i.toString()].img_name.length,
+                            len3=res[i.toString()].img_ext.length;
                         let ln=document.getElementById("inp").value;
 
-                        let str=res[i.toString()].img_cli+res[i.toString()].img_code+res[i.toString()].img_name+res[i.toString()].img_ext;
+                        let str=res[i.toString()].img_code+res[i.toString()].img_name+res[i.toString()].img_ext;
                         for (;ln.length<str.length;) {
                             ln+="0";
                         }
                         ln=decrypt(str,ln);
-                        link="https://"+ln.substring(0,len1)+"/"+ln.substring(len1,len1+len2)+"/"+ln.substring(len1+len2,len1+len2+len3)+"."+ln.substring(len1+len2+len3,len1+len2+len3+len4);
+                        link="https://"+res[i.toString()].img_cli+"/"+ln.substring(0,len1)+"/"+ln.substring(len1,len1+len2)+"."+ln.substring(len1+len2,len1+len2+len3);
                         found=1;
                         break;
                     }
